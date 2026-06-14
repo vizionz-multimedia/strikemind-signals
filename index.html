@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StrikeMind Signals™ | Subscriber Access</title>
+  <meta name="description" content="Subscriber landing page for Telegram and WhatsApp channel access." />
+  <style>
+    :root {
+      --bg: #050506;
+      --panel: rgba(18, 18, 21, 0.82);
+      --panel-strong: rgba(30, 30, 35, 0.92);
+      --border: rgba(255, 255, 255, 0.11);
+      --text: #f6f3ea;
+      --muted: #a8a29a;
+      --gold: #f0b429;
+      --gold-soft: rgba(240, 180, 41, 0.16);
+      --green: #22c55e;
+      --blue: #31a8ff;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(240, 180, 41, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 5%, rgba(34, 197, 94, 0.13), transparent 22%),
+        radial-gradient(circle at 50% 110%, rgba(49, 168, 255, 0.11), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent 80%);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(5, 5, 6, 0.68);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(240, 180, 41, 0.45);
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(240,180,41,0.22), rgba(255,255,255,0.04));
+      box-shadow: 0 0 28px rgba(240, 180, 41, 0.12);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: 180ms ease;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .pill:hover { color: var(--text); border-color: rgba(240,180,41,0.35); transform: translateY(-1px); }
+
+    .hero {
+      padding: 86px 0 48px;
+      display: grid;
+      grid-template-columns: 1.04fr 0.96fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 8px 13px;
+      border: 1px solid rgba(240,180,41,0.33);
+      border-radius: 999px;
+      background: var(--gold-soft);
+      color: #ffe6a6;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 8vw, 84px);
+      line-height: 0.94;
+      letter-spacing: -0.075em;
+      max-width: 720px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff8dd, var(--gold), #ff7a1a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.65;
+      max-width: 650px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 180ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 50px;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      color: #0a0700;
+      background: linear-gradient(135deg, #ffda74, var(--gold));
+      box-shadow: 0 14px 42px rgba(240, 180, 41, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.055);
+    }
+
+    .btn-telegram { background: linear-gradient(135deg, #57c6ff, #1d8dd8); color: white; }
+    .btn-whatsapp { background: linear-gradient(135deg, #35e277, #0fa94d); color: #031006; }
+
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .status-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.085), rgba(255,255,255,0.035));
+      box-shadow: var(--shadow);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-card::after {
+      content: "";
+      position: absolute;
+      inset: -80px -80px auto auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: rgba(240,180,41,0.14);
+      filter: blur(12px);
+    }
+
+    .terminal {
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      background: rgba(0,0,0,0.42);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .terminal-top {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; }
+    .dot:nth-child(2) { background: #ffbd2e; }
+    .dot:nth-child(3) { background: #27c93f; }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .signal-row:first-of-type { border-top: 0; }
+    .signal-tag { color: var(--gold); font-weight: 900; }
+    .signal-live { color: var(--green); font-weight: 900; }
+
+    .meter {
+      height: 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      background: linear-gradient(90deg, var(--gold), #ff7a1a);
+      border-radius: inherit;
+      animation: fill 1.25s ease both;
+    }
+
+    @keyframes fill { from { width: 0; } to { width: var(--w); } }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 34px 0 0;
+    }
+
+    .mini-card, .plan, .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.24);
+    }
+
+    .mini-card {
+      padding: 18px;
+      min-height: 130px;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 23px;
+      letter-spacing: -0.04em;
+    }
+
+    .mini-card span { color: var(--muted); line-height: 1.45; font-size: 14px; }
+
+    .section { padding: 56px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 430px;
+      line-height: 1.55;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .plan {
+      padding: 20px;
+      position: relative;
+      transition: 180ms ease;
+      overflow: hidden;
+    }
+
+    .plan.selected {
+      border-color: rgba(240,180,41,0.68);
+      box-shadow: 0 18px 70px rgba(240,180,41,0.13);
+      transform: translateY(-3px);
+    }
+
+    .plan-badge {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .plan h3 { margin: 0 0 8px; font-size: 24px; letter-spacing: -0.04em; }
+    .price { margin: 0 0 16px; font-size: 34px; font-weight: 950; letter-spacing: -0.06em; }
+    .price small { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0; }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      color: var(--muted);
+      display: grid;
+      gap: 10px;
+      line-height: 1.4;
+      font-size: 14px;
+    }
+
+    .features li::before { content: "✓"; color: var(--green); font-weight: 900; margin-right: 8px; }
+
+    .join-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .join-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel-strong);
+      padding: 22px;
+    }
+
+    .field-grid { display: grid; gap: 12px; margin: 16px 0; }
+
+    label { display: grid; gap: 7px; color: var(--muted); font-size: 13px; font-weight: 800; }
+
+    input, select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(0,0,0,0.28);
+      color: var(--text);
+      padding: 14px 14px;
+      outline: none;
+      font: inherit;
+    }
+
+    input:focus, select:focus { border-color: rgba(240,180,41,0.65); box-shadow: 0 0 0 4px rgba(240,180,41,0.1); }
+
+    .channel-buttons { display: grid; gap: 10px; margin-top: 14px; }
+
+    .notice {
+      border: 1px solid rgba(240,180,41,0.24);
+      background: rgba(240,180,41,0.08);
+      border-radius: 18px;
+      padding: 14px;
+      color: #e9d9a7;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .timebox {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 8px;
+      text-align: center;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .timebox strong { display: block; font-size: 26px; letter-spacing: -0.05em; }
+    .timebox span { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .faq-list { display: grid; gap: 12px; }
+    .faq-item { overflow: hidden; }
+    .faq-question {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      padding: 18px;
+      font: inherit;
+      font-weight: 900;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .faq-answer { display: none; padding: 0 18px 18px; color: var(--muted); line-height: 1.55; }
+    .faq-item.open .faq-answer { display: block; }
+
+    .footer {
+      padding: 32px 0 52px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 50;
+      transform: translate(-50%, 30px);
+      opacity: 0;
+      pointer-events: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(17, 17, 19, 0.94);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      padding: 13px 16px;
+      transition: 220ms ease;
+      font-size: 14px;
+      max-width: min(520px, calc(100% - 32px));
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(10px);
+    }
+    .modal.open { display: grid; }
+    .modal-card {
+      width: min(520px, 100%);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      background: #111115;
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .modal-top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .close {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 12px;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 880px) {
+      .hero, .join-panel { grid-template-columns: 1fr; }
+      .cards, .plans { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 12px; }
+      .nav-inner { align-items: flex-start; padding: 14px 0; }
+      .pill.hide-mobile { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- REVIEW WARNING: Replace placeholder links in SETTINGS before public launch. -->
+  <nav class="nav">
+    <div class="shell nav-inner">
+      <div class="brand" aria-label="StrikeMind Signals home">
+        <div class="brand-mark">⚡</div>
+        <div>
+          <div>StrikeMind Signals™</div>
+          <small style="color: var(--muted); letter-spacing: 0; font-weight: 700;">Telegram + WhatsApp Access</small>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="pill hide-mobile" href="#plans">Plans</a>
+        <a class="pill hide-mobile" href="#join">Join</a>
+        <button class="btn btn-primary" data-scroll="#join">Get Access</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="signal-live">● Live</span> Subscriber Gateway</div>
+        <h1>Premium signal alerts for your <span class="gradient-text">private channels.</span></h1>
+        <p class="hero-copy">A focused landing page for moving subscribers into your Telegram and WhatsApp communities. Confirm the page works, then drop your custom invite links into the settings block.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-scroll="#plans">Choose a Plan →</button>
+          <button class="btn btn-secondary" id="copyDemoLink">Copy Demo Page Link</button>
+        </div>
+        <div class="cards" aria-label="Landing page highlights">
+          <div class="mini-card"><strong id="memberCount">2,480+</strong><span>Subscriber-ready layout with animated social proof.</span></div>
+          <div class="mini-card"><strong>2 Channels</strong><span>Telegram and WhatsApp buttons are wired for easy custom links.</span></div>
+          <div class="mini-card"><strong>Fast Launch</strong><span>Static HTML works on Base44, Netlify, Vercel, GitHub Pages, or a Deno response.</span></div>
+        </div>
+      </div>
+
+      <aside class="status-card" aria-label="Signal status preview">
+        <div class="terminal">
+          <div class="terminal-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="signal-row"><span class="signal-tag">ALERT</span><span>Telegram broadcast queue</span><span class="signal-live">READY</span></div>
+          <div class="signal-row"><span class="signal-tag">SYNC</span><span>WhatsApp subscriber access</span><span class="signal-live">READY</span></div>
+          <div class="signal-row"><span class="signal-tag">FLOW</span><span>Plan → email → channel</span><span class="signal-live">ACTIVE</span></div>
+          <div style="margin-top: 18px; display: grid; gap: 12px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:12px; font-weight:900; margin-bottom:7px;"><span>Subscriber intent</span><span>92%</span></div>
+              <div class="meter"><span style="--w: 92%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:12px; font-weight:900; margin-bottom:7px;"><span>Mobile readiness</span><span>98%</span></div>
+              <div class="meter"><span style="--w: 98%"></span></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" id="plans">
+      <div class="section-head">
+        <h2>Select your access tier.</h2>
+        <p>These plan cards are front-end ready. You can connect them to Stripe, Base44 actions, or direct channel invites after the page is confirmed running.</p>
+      </div>
+      <div class="plans" id="plansGrid"></div>
+    </section>
+
+    <section class="section" id="join">
+      <div class="section-head">
+        <h2>Join the broadcast.</h2>
+        <p>The form validates user input locally and remembers the selected plan. Final invite links stay in one settings object.</p>
+      </div>
+      <div class="join-panel">
+        <div class="join-card">
+          <h3 style="margin:0 0 6px; font-size: 25px; letter-spacing:-0.04em;">Subscriber details</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.55;">Enter your details, then choose Telegram, WhatsApp, or both.</p>
+          <div class="field-grid">
+            <label>Selected plan
+              <select id="planSelect"></select>
+            </label>
+            <label>Email address
+              <input id="emailInput" type="email" placeholder="you@example.com" autocomplete="email" />
+            </label>
+            <label>Telegram username / WhatsApp name <span style="font-weight:600; opacity:.7;">optional</span>
+              <input id="handleInput" type="text" placeholder="@username or your name" autocomplete="name" />
+            </label>
+          </div>
+          <button class="btn btn-primary" style="width:100%;" id="unlockBtn">Unlock Channel Buttons</button>
+          <div class="channel-buttons" id="channelButtons" hidden>
+            <button class="btn btn-telegram" data-channel="telegram">Open Telegram Invite</button>
+            <button class="btn btn-whatsapp" data-channel="whatsapp">Open WhatsApp Invite</button>
+            <button class="btn btn-secondary" data-channel="both">Open Both Channels</button>
+          </div>
+        </div>
+
+        <div class="join-card">
+          <h3 style="margin:0 0 10px; font-size: 25px; letter-spacing:-0.04em;">Launch checklist</h3>
+          <div class="notice">
+            <strong>Current state:</strong> invite buttons are protected by placeholders. After confirming the page runs, replace <code>telegramInvite</code> and <code>whatsappInvite</code> inside <code>SETTINGS</code> with your custom address links.
+          </div>
+          <div class="countdown" aria-label="Next drop countdown">
+            <div class="timebox"><strong id="days">00</strong><span>Days</span></div>
+            <div class="timebox"><strong id="hours">00</strong><span>Hours</span></div>
+            <div class="timebox"><strong id="mins">00</strong><span>Mins</span></div>
+            <div class="timebox"><strong id="secs">00</strong><span>Secs</span></div>
+          </div>
+          <button class="btn btn-secondary" style="width:100%; margin-top:14px;" id="openSettings">Show Link Settings</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head">
+        <h2>Subscriber FAQ.</h2>
+        <p>Editable answers for your exact community, payment flow, and access rules.</p>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <strong>Important:</strong> This page is a subscriber access interface. Do not promise guaranteed outcomes, profits, or results. Add your terms, refund policy, and risk disclosure before public launch.
+    </div>
+  </footer>
+
+  <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div>
+          <h3 id="settingsTitle" style="margin:0 0 8px; font-size: 26px; letter-spacing:-0.04em;">Custom link settings</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.55;">When confirmed running, replace the placeholder values near the top of the script.</p>
+        </div>
+        <button class="close" data-close aria-label="Close settings modal">×</button>
+      </div>
+      <pre style="white-space:pre-wrap; overflow:auto; margin:18px 0 0; border:1px solid var(--border); border-radius:16px; padding:14px; color:#f7d88b; background:rgba(0,0,0,.34); font-size:13px;"><code>const SETTINGS = {
+  telegramInvite: "https://t.me/+QJ2o0a3l2fA4Yjlh",
+  whatsappInvite: "https://chat.whatsapp.com/E0Hm10BOmY9HkrjoxN5z4X",
+  checkoutEndpoint: ""
+};</code></pre>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // REVIEW WARNING: Front-end only. Review links, copy, claims, and payment integration before production.
+    const SETTINGS = {
+      brandName: "StrikeMind Signals™",
+      telegramInvite: "https://t.me/+QJ2o0a3l2fA4Yjlh"
+      whatsappInvite: "https://chat.whatsapp.com/E0Hm10BOmY9HkrjoxN5z4X"
+      checkoutEndpoint: "", // Optional later: your Stripe/Base44/API endpoint.
+      nextDropDaysFromNow: 2,
+      plans: [
+        {
+          id: "brief",
+          label: "Starter",
+          name: "Daily Brief",
+          price: "$29",
+          cadence: "/mo",
+          features: ["Telegram channel access", "Daily market watchlist", "Community updates"],
+          cta: "Start with Daily Brief"
+        },
+        {
+          id: "fullstack",
+          label: "Most Popular",
+          name: "Full Signal Stack",
+          price: "$79",
+          cadence: "/mo",
+          features: ["Telegram + WhatsApp access", "Priority alerts", "Weekly recap drops"],
+          cta: "Unlock Full Stack"
+        },
+        {
+          id: "vip",
+          label: "VIP",
+          name: "Fire Room",
+          price: "$149",
+          cadence: "/mo",
+          features: ["Everything in Full Stack", "VIP-only channel", "Early drop notifications"],
+          cta: "Enter Fire Room"
+        }
+      ],
+      faqs: [
+        ["When do I get access?", "After checkout or manual approval, subscribers receive invite links for the selected channels. During testing, the buttons show a safe placeholder message until your real links are added."],
+        ["Can I use only Telegram or only WhatsApp?", "Yes. The page supports Telegram, WhatsApp, or both. You can adjust the plan features and channel button rules inside the SETTINGS object."],
+        ["Where do I add my custom address links?", "Open the code, find SETTINGS, then paste your Telegram invite into telegramInvite and your WhatsApp invite into whatsappInvite."],
+        ["Is this connected to payments yet?", "Not by default. This version is designed to confirm the landing page flow first. A Stripe, Base44, or custom checkout endpoint can be attached next."],
+        ["What disclosure should I include?", "Use clear terms. Avoid guaranteed claims. Explain that alerts are informational and subscribers are responsible for their own decisions."]
+      ]
+    };
+
+    const state = { selectedPlan: "fullstack", unlocked: false };
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    function toast(message) {
+      const el = $("#toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+    }
+
+    function renderPlans() {
+      const grid = $("#plansGrid");
+      const select = $("#planSelect");
+      grid.innerHTML = SETTINGS.plans.map(plan => `
+        <article class="plan ${plan.id === state.selectedPlan ? "selected" : ""}" data-plan="${plan.id}">
+          <span class="plan-badge">${plan.label}</span>
+          <h3>${plan.name}</h3>
+          <p class="price">${plan.price}<small>${plan.cadence}</small></p>
+          <ul class="features">${plan.features.map(item => `<li>${item}</li>`).join("")}</ul>
+          <button class="btn ${plan.id === "fullstack" ? "btn-primary" : "btn-secondary"}" style="width:100%;" data-choose="${plan.id}">${plan.cta}</button>
+        </article>
+      `).join("");
+
+      select.innerHTML = SETTINGS.plans.map(plan => `<option value="${plan.id}">${plan.name} — ${plan.price}${plan.cadence}</option>`).join("");
+      select.value = state.selectedPlan;
+    }
+
+    function renderFaq() {
+      $("#faqList").innerHTML = SETTINGS.faqs.map(([q, a], index) => `
+        <article class="faq-item ${index === 0 ? "open" : ""}">
+          <button class="faq-question" type="button"><span>${q}</span><span>+</span></button>
+          <div class="faq-answer">${a}</div>
+        </article>
+      `).join("");
+    }
+
+    function selectPlan(planId) {
+      state.selectedPlan = planId;
+      renderPlans();
+      toast(`Selected: ${SETTINGS.plans.find(p => p.id === planId).name}`);
+      $("#join").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function unlockChannels() {
+      const email = $("#emailInput").value.trim();
+      if (!isValidEmail(email)) {
+        toast("Enter a valid email address first.");
+        $("#emailInput").focus();
+        return;
+      }
+      state.unlocked = true;
+      $("#channelButtons").hidden = false;
+      toast("Channel buttons unlocked for testing.");
+    }
+
+    function openInvite(channel) {
+      if (!state.unlocked) return toast("Unlock the channel buttons first.");
+      const plan = SETTINGS.plans.find(p => p.id === state.selectedPlan)?.name || "Selected plan";
+      const telegramReady = SETTINGS.telegramInvite && SETTINGS.telegramInvite.startsWith("http");
+      const whatsappReady = SETTINGS.whatsappInvite && SETTINGS.whatsappInvite.startsWith("http");
+
+      const openSafe = (url, label) => {
+        if (!url || !url.startsWith("http")) {
+          toast(`${label} invite link is not attached yet. Add it in SETTINGS after testing.`);
+          return false;
+        }
+        window.open(url, "_blank", "noopener,noreferrer");
+        toast(`Opening ${label} for ${plan}.`);
+        return true;
+      };
+
+      if (channel === "telegram") openSafe(SETTINGS.telegramInvite, "Telegram");
+      if (channel === "whatsapp") openSafe(SETTINGS.whatsappInvite, "WhatsApp");
+      if (channel === "both") {
+        const openedTelegram = openSafe(SETTINGS.telegramInvite, "Telegram");
+        setTimeout(() => {
+          if (openedTelegram || whatsappReady) openSafe(SETTINGS.whatsappInvite, "WhatsApp");
+          if (!telegramReady && !whatsappReady) toast("Both channel links are still placeholders. Add custom invites in SETTINGS.");
+        }, 350);
+      }
+    }
+
+    function initCountdown() {
+      const target = Date.now() + SETTINGS.nextDropDaysFromNow * 24 * 60 * 60 * 1000;
+      const tick = () => {
+        const diff = Math.max(0, target - Date.now());
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        $("#days").textContent = String(days).padStart(2, "0");
+        $("#hours").textContent = String(hours).padStart(2, "0");
+        $("#mins").textContent = String(mins).padStart(2, "0");
+        $("#secs").textContent = String(secs).padStart(2, "0");
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function animateMemberCount() {
+      const el = $("#memberCount");
+      const target = 2480;
+      let current = 0;
+      const step = () => {
+        current += Math.ceil((target - current) / 12);
+        el.textContent = `${current.toLocaleString()}+`;
+        if (current < target) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    document.addEventListener("click", (event) => {
+      const scrollButton = event.target.closest("[data-scroll]");
+      if (scrollButton) $(scrollButton.dataset.scroll)?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      const choose = event.target.closest("[data-choose]");
+      if (choose) selectPlan(choose.dataset.choose);
+
+      const channel = event.target.closest("[data-channel]");
+      if (channel) openInvite(channel.dataset.channel);
+
+      const faqButton = event.target.closest(".faq-question");
+      if (faqButton) faqButton.closest(".faq-item").classList.toggle("open");
+
+      if (event.target.closest("#openSettings")) $("#settingsModal").classList.add("open");
+      if (event.target.closest("[data-close]") || event.target.id === "settingsModal") $("#settingsModal").classList.remove("open");
+    });
+
+    $("#planSelect").addEventListener("change", (event) => {
+      state.selectedPlan = event.target.value;
+      renderPlans();
+    });
+
+    $("#unlockBtn").addEventListener("click", unlockChannels);
+
+    $("#copyDemoLink").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(location.href);
+        toast("Demo page link copied.");
+      } catch {
+        toast("Copy blocked by browser. Use the address bar instead.");
+      }
+    });
+
+    renderPlans();
+    renderFaq();
+    initCountdown();
+    animateMemberCount();
+  </script>
+</body>
+</html>
